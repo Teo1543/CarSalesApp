@@ -23,6 +23,9 @@ class CarSellActivity : AppCompatActivity() {
         binding = ActivityCarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
+
 
         app = application as MainApp
 
@@ -61,6 +64,12 @@ class CarSellActivity : AppCompatActivity() {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_listing, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
     private fun carModelFocusListener() {
 
         binding.carModel.setOnFocusChangeListener { _, focused ->
@@ -80,7 +89,6 @@ class CarSellActivity : AppCompatActivity() {
         }
         return null
     }
-
 
 
 
@@ -121,26 +129,5 @@ class CarSellActivity : AppCompatActivity() {
             return "Please enter a decimal number. E.G 3.0"
         }
         return null
-    }
-
-
-
-
-
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_car, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    //Potential bug?
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_cancel -> {
-                finish()
-            }
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
