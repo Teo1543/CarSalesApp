@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">CarSalesApp</string>
+    <string name="app_name">CarsalesApp</string>
+
+
+
+    <string name="hint_carName">Name</string>
+
+    <string name="hint_year">Year</string>
+
+
+    <string name="hint_engineSize">Engine Size</string>
+
+
+
+    <string name="menu_cancelAction">Cancel</string>
+
+    <string name="menu_addCar">Add</string>
+
+    <string name="button">Add Car</string>
+    <string name="Required">Required</string>
 </resources>
