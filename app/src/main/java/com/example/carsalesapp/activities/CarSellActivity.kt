@@ -3,7 +3,6 @@ package com.example.carsalesapp.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import com.example.carsalesapp.R
 import com.example.carsalesapp.databinding.ActivityCarBinding
 import com.example.carsalesapp.main.MainApp
@@ -24,7 +23,7 @@ class CarSellActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
+        //setSupportActionBar(binding.toolbarAdd)
 
 
         app = application as MainApp
