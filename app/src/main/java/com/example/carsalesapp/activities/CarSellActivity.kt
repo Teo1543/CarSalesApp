@@ -3,7 +3,6 @@ package com.example.carsalesapp.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import com.example.carsalesapp.R
 import com.example.carsalesapp.databinding.ActivityCarBinding
 import com.example.carsalesapp.main.MainApp
@@ -24,14 +23,10 @@ class CarSellActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.toolbarAdd.title = title
-        setSupportActionBar(binding.toolbarAdd)
+        //setSupportActionBar(binding.toolbarAdd)
 
 
         app = application as MainApp
-
-        carModelFocusListener()
-        yearFocusListener()
-        engineSizeFocusListener()
 
         i("Cars Activity started...")
 
@@ -43,7 +38,7 @@ class CarSellActivity : AppCompatActivity() {
             car.year = binding.carYear.text.toString().toInt()
             car.engineSize = binding.carEngineSize.text.toString().toDouble()
 
-            if (car.name.isNotEmpty()) {
+            if (car.name.isNotEmpty() && car.year > 1890 && car.year < 2023 && car.engineSize > 0.8 && car.engineSize < 6.0) {
 
                 app.cars.add(car.copy())
                 i("add Button Pressed: $car")
@@ -60,6 +55,10 @@ class CarSellActivity : AppCompatActivity() {
             }
 
         }
+
+        carModelFocusListener()
+        yearFocusListener()
+        engineSizeFocusListener()
 
     }
 
@@ -85,7 +84,7 @@ class CarSellActivity : AppCompatActivity() {
             return "Your vehicle name is too large."
         }
         if(carModel.length < 5){
-            return "Your vehicle name is too short."
+            return "Your vehicle name is too short. Make sure that the name is greater than 4 letters."
         }
         return null
     }
@@ -105,8 +104,8 @@ class CarSellActivity : AppCompatActivity() {
     private fun validYear(): String? {
 
         val carYear = binding.carYear.text.toString()
-        if(carYear.length < 4 && carYear.isEmpty()) {
-            return "Please specify year in 4 number formats"
+        if(carYear.length != 4) {
+            return "Please specify year in 4 number formats. Make sure the year is between 1890-2023"
         }
         return null
     }
@@ -125,8 +124,8 @@ class CarSellActivity : AppCompatActivity() {
 
     private fun validEngineSize(): String? {
         val carEngineSize = binding.carEngineSize.text.toString()
-        if(carEngineSize.length < 3 && carEngineSize.isEmpty()) {
-            return "Please enter a decimal number. E.G 3.0"
+        if(carEngineSize.length < 3) {
+            return "Please enter a decimal number. E.G 3.0. Make sure the size is between 0.8 - 6.0"
         }
         return null
     }
