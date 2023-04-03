@@ -1,5 +1,6 @@
 package com.example.carsalesapp.activities
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -16,12 +17,12 @@ class CarSellActivity : AppCompatActivity() {
     private var car = CarModel()
     private lateinit var app: MainApp
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        var edit = false
         binding = ActivityCarBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.toolbarAdd.title = title
         //setSupportActionBar(binding.toolbarAdd)
 
@@ -30,30 +31,36 @@ class CarSellActivity : AppCompatActivity() {
 
         i("Cars Activity started...")
 
+        if (intent.hasExtra("car_edit")) {
+            edit = true
+            car = intent.extras?.getParcelable("car_edit")!!
+            binding.carModel.setText(car.name)
+            binding.carYear.setText(car.year.toString())
+            binding.carEngineSize.setText(car.engineSize.toString())
+            binding.btnAdd.setText(R.string.save_car)
+        }
 
 
         binding.btnAdd.setOnClickListener {
             car.name = binding.carModel.text.toString()
-
             car.year = binding.carYear.text.toString().toInt()
             car.engineSize = binding.carEngineSize.text.toString().toDouble()
 
-            if (car.name.isNotEmpty() && car.year > 1890 && car.year < 2023 && car.engineSize > 0.8 && car.engineSize < 6.0) {
-
-                app.cars.add(car.copy())
-                i("add Button Pressed: $car")
-                for (i in app.cars.indices) {
-                    i("Car[$i]:${this.app.cars[i]}")
-                }
-                setResult(RESULT_OK)
-                finish()
-            }
-            else {
-                Snackbar
-                    .make(it,"Please Enter a full car name", Snackbar.LENGTH_LONG)
+            if (car.name.isEmpty()) {
+                Snackbar.make(it, R.string.enter_car_name, Snackbar.LENGTH_LONG)
                     .show()
             }
-
+            else {
+                if(edit) {
+                    app.cars.update(car.copy())
+                }
+                else {
+                    app.cars.create(car.copy())
+                }
+            }
+            i("add Button Pressed: $car")
+            setResult(RESULT_OK)
+            finish()
         }
 
         carModelFocusListener()
@@ -129,4 +136,6 @@ class CarSellActivity : AppCompatActivity() {
         }
         return null
     }
+
 }
+

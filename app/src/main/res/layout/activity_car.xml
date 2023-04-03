@@ -21,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        tools:ignore="VisualLintBounds" />
 
 
 
@@ -97,8 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/hint_engineSize"
-            android:inputType="numberDecimal"
             android:autofillHints="1.0, 2.0, 3.0"
+            android:inputType="numberDecimal"
             android:lines="1"
             tools:ignore="SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 

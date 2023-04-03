@@ -1,16 +1,11 @@
 <resources>
     <string name="app_name">CarsalesApp</string>
 
-
-
     <string name="hint_carName">Name</string>
 
     <string name="hint_year">Year</string>
 
-
     <string name="hint_engineSize">Engine Size</string>
-
-
 
     <string name="menu_cancelAction">Cancel</string>
 
@@ -19,4 +14,12 @@
     <string name="button">Add Car</string>
 
     <string name="Required">Required</string>
+
+    <string name="enter_car_name"> Please enter a Car Name </string>
+
+    <string name="enter_car_year"> Please enter a valid Car Year </string>
+
+    <string name="enter_car_engineSize"> Please enter a valid Engine Size </string>
+
+    <string name="save_car"> Save Car </string>
 </resources>

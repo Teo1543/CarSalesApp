@@ -10,10 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.carsalesapp.R
 import com.example.carsalesapp.adapters.CarAdapter
+import com.example.carsalesapp.adapters.CarListener
 import com.example.carsalesapp.databinding.ActivityCarListBinding
 import com.example.carsalesapp.main.MainApp
+import com.example.carsalesapp.models.CarModel
 
-class CarListActivity : AppCompatActivity() {
+class CarListActivity : AppCompatActivity(), CarListener {
 
     private lateinit var app: MainApp
     private lateinit var binding: ActivityCarListBinding
@@ -29,7 +31,9 @@ class CarListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = CarAdapter(app.cars)
+//        binding.recyclerView.adapter = CarAdapter(app.cars)
+//        binding.recyclerView.adapter = CarAdapter(app.cars.findAll())
+        binding.recyclerView.adapter = CarAdapter(app.cars.findAll(),this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +57,23 @@ class CarListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.cars.size)
+                notifyItemRangeChanged(0,app.cars.findAll().size)
+            }
+        }
+
+    override fun onCarClick(car: CarModel) {
+        val launcherIntent = Intent(this, CarSellActivity::class.java)
+        launcherIntent.putExtra("car_edit", car)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.cars.findAll().size)
             }
         }
 }
