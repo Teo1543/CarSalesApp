@@ -6,8 +6,12 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.example.carsalesapp.R
 import com.example.carsalesapp.databinding.ActivityCarBinding
 import com.example.carsalesapp.helpers.showImagePicker
@@ -32,6 +36,16 @@ class CarSellActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbarAdd.title = title
         //setSupportActionBar(binding.toolbarAdd)
+
+        val switch: Switch = findViewById(R.id.theme)
+        switch.setOnCheckedChangeListener{ buttonView, isChecked ->
+            if(isChecked) {
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+            }
+            else {
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+            }
+        }
 
 
         app = application as MainApp
@@ -175,6 +189,7 @@ class CarSellActivity : AppCompatActivity() {
                 }
             }
     }
+
 
 
 }
