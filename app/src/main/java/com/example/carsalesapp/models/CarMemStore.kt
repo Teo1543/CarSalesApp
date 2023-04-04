@@ -28,6 +28,7 @@ class CarMemStore : CarStore {
             foundCar.name = car.name
             foundCar.year = car.year
             foundCar.engineSize = car.engineSize
+            foundCar.image = car.image
             logAll()
         }
     }

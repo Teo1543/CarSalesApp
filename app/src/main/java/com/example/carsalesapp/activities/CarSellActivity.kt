@@ -1,14 +1,20 @@
 package com.example.carsalesapp.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.carsalesapp.R
 import com.example.carsalesapp.databinding.ActivityCarBinding
+import com.example.carsalesapp.helpers.showImagePicker
 import com.example.carsalesapp.main.MainApp
 import com.example.carsalesapp.models.CarModel
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import timber.log.Timber.i
 
 class CarSellActivity : AppCompatActivity() {
@@ -16,6 +22,7 @@ class CarSellActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCarBinding
     private var car = CarModel()
     private lateinit var app: MainApp
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +45,12 @@ class CarSellActivity : AppCompatActivity() {
             binding.carYear.setText(car.year.toString())
             binding.carEngineSize.setText(car.engineSize.toString())
             binding.btnAdd.setText(R.string.save_car)
+            Picasso.get()
+                .load(car.image)
+                .into(binding.carImage)
+            if (car.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_car_image)
+            }
         }
 
 
@@ -63,9 +76,15 @@ class CarSellActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+        }
+
         carModelFocusListener()
         yearFocusListener()
         engineSizeFocusListener()
+
+        registerImagePickerCallback()
 
     }
 
@@ -136,6 +155,27 @@ class CarSellActivity : AppCompatActivity() {
         }
         return null
     }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            car.image = result.data!!.data!!
+                            Picasso.get()
+                                .load(car.image)
+                                .into(binding.carImage)
+                            binding.chooseImage.setText(R.string.change_car_image)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
 
 }
 

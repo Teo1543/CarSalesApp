@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.carsalesapp.databinding.CardCarBinding
 import com.example.carsalesapp.models.CarModel
+import com.squareup.picasso.Picasso
 
 interface CarListener {
     fun onCarClick(car: CarModel)
@@ -36,6 +37,7 @@ class CarAdapter constructor(private var cars: List<CarModel>,
             binding.carModel.text = car.name
             binding.carYear.text = car.year.toString()
             binding.carEngineSize.text = car.engineSize.toString()
+            Picasso.get().load(car.image).resize(300,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onCarClick(car) }
         }
     }

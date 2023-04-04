@@ -22,4 +22,10 @@
     <string name="enter_car_engineSize"> Please enter a valid Engine Size </string>
 
     <string name="save_car"> Save Car </string>
+
+    <string name="button_addImage"> Add Image </string>
+
+    <string name="select_car_image">Select car photo</string>
+
+    <string name="change_car_image">Change car photo</string>
 </resources>
