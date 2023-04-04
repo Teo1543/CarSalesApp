@@ -30,5 +30,7 @@
     <string name="change_car_image">Change car photo</string>
 
     <string name="theme">Night Mode</string>
+    <string name="night_day">Night|Day</string>
+    <string name="delete">Delete</string>
 
 </resources>
