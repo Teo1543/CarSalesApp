@@ -34,5 +34,4 @@
     <string name="button_location">Set Location</string>
 
     <string name="title_activity_map">MapActivity</string>
-    <string name="title_activity_maps">MapsActivity</string>
 </resources>

@@ -78,4 +78,8 @@ class CarListActivity : AppCompatActivity(), CarListener {
                 (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.cars.findAll().size)
             }
         }
+
+    fun delete(car: CarModel) {
+
+    }
 }

@@ -1,8 +1,6 @@
 package com.example.carsalesapp.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,6 +16,7 @@ import com.example.carsalesapp.databinding.ActivityCarBinding
 import com.example.carsalesapp.helpers.showImagePicker
 import com.example.carsalesapp.main.MainApp
 import com.example.carsalesapp.models.CarModel
+import com.example.carsalesapp.models.Location
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import timber.log.Timber.i
@@ -29,7 +28,6 @@ class CarSellActivity : AppCompatActivity() {
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-  //  var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -106,9 +104,17 @@ class CarSellActivity : AppCompatActivity() {
         }
 
         binding.carLocation.setOnClickListener {
+            val location = Location(-36.888049, 174.745918, 15f)
+            if (car.zoom != 0f) {
+                location.lat =  car.lat
+                location.lng = car.lng
+                location.zoom = car.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
         }
+
 
         carModelFocusListener()
         yearFocusListener()
@@ -211,7 +217,21 @@ class CarSellActivity : AppCompatActivity() {
     private fun registerMapCallback() {
         mapIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { i("Map Loaded") }
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            car.lat = location.lat
+                            car.lng = location.lng
+                            car.zoom = location.zoom
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 
 }
