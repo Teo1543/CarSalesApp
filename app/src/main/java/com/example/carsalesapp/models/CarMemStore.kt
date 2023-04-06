@@ -29,6 +29,9 @@ class CarMemStore : CarStore {
             foundCar.year = car.year
             foundCar.engineSize = car.engineSize
             foundCar.image = car.image
+            foundCar.lat = car.lat
+            foundCar.lng = car.lng
+            foundCar.zoom = car.zoom
             logAll()
         }
     }
@@ -36,4 +39,8 @@ class CarMemStore : CarStore {
     private fun logAll() {
         cars.forEach{ i("$it") }
     }
+
+//    override fun delete(car: CarModel) {
+//        cars.remove(car)
+//    }
 }

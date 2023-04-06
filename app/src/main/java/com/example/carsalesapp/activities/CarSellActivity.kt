@@ -1,6 +1,5 @@
 package com.example.carsalesapp.activities
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +16,7 @@ import com.example.carsalesapp.databinding.ActivityCarBinding
 import com.example.carsalesapp.helpers.showImagePicker
 import com.example.carsalesapp.main.MainApp
 import com.example.carsalesapp.models.CarModel
+import com.example.carsalesapp.models.Location
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import timber.log.Timber.i
@@ -27,6 +27,7 @@ class CarSellActivity : AppCompatActivity() {
     private var car = CarModel()
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +46,14 @@ class CarSellActivity : AppCompatActivity() {
             else {
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
             }
+        }
+
+        binding.carLocation.setOnClickListener {
+            i ("Set Location Pressed")
+        }
+
+        binding.deleteButton.setOnClickListener {
+            i ("Delete Button Pressed")
         }
 
 
@@ -68,7 +77,7 @@ class CarSellActivity : AppCompatActivity() {
         }
 
 
-        binding.btnAdd.setOnClickListener {
+            binding.btnAdd.setOnClickListener {
             car.name = binding.carModel.text.toString()
             car.year = binding.carYear.text.toString().toInt()
             car.engineSize = binding.carEngineSize.text.toString().toDouble()
@@ -94,11 +103,25 @@ class CarSellActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.carLocation.setOnClickListener {
+            val location = Location(-36.888049, 174.745918, 15f)
+            if (car.zoom != 0f) {
+                location.lat =  car.lat
+                location.lng = car.lng
+                location.zoom = car.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
+
         carModelFocusListener()
         yearFocusListener()
         engineSizeFocusListener()
 
         registerImagePickerCallback()
+        registerMapCallback()
 
     }
 
@@ -174,7 +197,7 @@ class CarSellActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when(result.resultCode){
+                when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
@@ -185,12 +208,31 @@ class CarSellActivity : AppCompatActivity() {
                             binding.chooseImage.setText(R.string.change_car_image)
                         } // end of if
                     }
-                    RESULT_CANCELED -> { } else -> { }
+                    RESULT_CANCELED -> {}
+                    else -> {}
                 }
             }
     }
 
-
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            car.lat = location.lat
+                            car.lng = location.lng
+                            car.zoom = location.zoom
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
 
 }
 

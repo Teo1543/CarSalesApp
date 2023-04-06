@@ -29,6 +29,9 @@
 
     <string name="change_car_image">Change car photo</string>
 
-    <string name="theme">Night Mode</string>
+    <string name="night_day">Night/Day</string>
 
+    <string name="button_location">Set Location</string>
+
+    <string name="title_activity_map">MapActivity</string>
 </resources>
