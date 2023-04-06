@@ -2,6 +2,7 @@ package com.example.carsalesapp.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Location
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +28,8 @@ class CarSellActivity : AppCompatActivity() {
     private var car = CarModel()
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+  //  var location = Location(52.245696, -7.139102, 15f)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +48,14 @@ class CarSellActivity : AppCompatActivity() {
             else {
                 AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
             }
+        }
+
+        binding.carLocation.setOnClickListener {
+            i ("Set Location Pressed")
+        }
+
+        binding.deleteButton.setOnClickListener {
+            i ("Delete Button Pressed")
         }
 
 
@@ -68,7 +79,7 @@ class CarSellActivity : AppCompatActivity() {
         }
 
 
-        binding.btnAdd.setOnClickListener {
+            binding.btnAdd.setOnClickListener {
             car.name = binding.carModel.text.toString()
             car.year = binding.carYear.text.toString().toInt()
             car.engineSize = binding.carEngineSize.text.toString().toDouble()
@@ -94,11 +105,17 @@ class CarSellActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.carLocation.setOnClickListener {
+            val launcherIntent = Intent(this, MapActivity::class.java)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         carModelFocusListener()
         yearFocusListener()
         engineSizeFocusListener()
 
         registerImagePickerCallback()
+        registerMapCallback()
 
     }
 
@@ -174,7 +191,7 @@ class CarSellActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when(result.resultCode){
+                when (result.resultCode) {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
@@ -185,12 +202,17 @@ class CarSellActivity : AppCompatActivity() {
                             binding.chooseImage.setText(R.string.change_car_image)
                         } // end of if
                     }
-                    RESULT_CANCELED -> { } else -> { }
+                    RESULT_CANCELED -> {}
+                    else -> {}
                 }
             }
     }
 
-
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { i("Map Loaded") }
+    }
 
 }
 

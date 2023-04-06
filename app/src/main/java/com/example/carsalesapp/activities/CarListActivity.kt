@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,8 @@ import com.example.carsalesapp.adapters.CarListener
 import com.example.carsalesapp.databinding.ActivityCarListBinding
 import com.example.carsalesapp.main.MainApp
 import com.example.carsalesapp.models.CarModel
+import com.example.carsalesapp.models.CarStore
+import kotlin.random.Random
 
 class CarListActivity : AppCompatActivity(), CarListener {
 
@@ -72,8 +75,7 @@ class CarListActivity : AppCompatActivity(), CarListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.cars.findAll().size)
+                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.cars.findAll().size)
             }
         }
 }
