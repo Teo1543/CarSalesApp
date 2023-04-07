@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso
 import timber.log.Timber.i
 
 interface CarListener {
-    fun onCarClick(car: CarModel)
+    fun onCarClick(car: CarModel, position: Int)
 }
 
 
@@ -46,7 +46,7 @@ class CarAdapter constructor(private var cars: List<CarModel>,
             binding.carYear.text = car.year.toString()
             binding.carEngineSize.text = car.engineSize.toString()
             Picasso.get().load(car.image).resize(300, 200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onCarClick(car) }
+            binding.root.setOnClickListener { listener.onCarClick(car, adapterPosition) }
         }
     }
 

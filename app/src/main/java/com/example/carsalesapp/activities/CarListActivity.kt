@@ -22,6 +22,7 @@ class CarListActivity : AppCompatActivity(), CarListener {
 
     private lateinit var app: MainApp
     private lateinit var binding: ActivityCarListBinding
+    private var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +65,10 @@ class CarListActivity : AppCompatActivity(), CarListener {
             }
         }
 
-    override fun onCarClick(car: CarModel) {
+    override fun onCarClick(car: CarModel, pos : Int) {
         val launcherIntent = Intent(this, CarSellActivity::class.java)
         launcherIntent.putExtra("car_edit", car)
+        position = pos
         getClickResult.launch(launcherIntent)
     }
 
@@ -75,11 +77,12 @@ class CarListActivity : AppCompatActivity(), CarListener {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
-                (binding.recyclerView.adapter)?.notifyItemRangeChanged(0, app.cars.findAll().size)
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.cars.findAll().size)
             }
+            else // Deleting
+                if (it.resultCode == 99)     (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 
-    fun delete(car: CarModel) {
 
-    }
 }

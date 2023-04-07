@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Switch
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,11 +29,14 @@ class CarSellActivity : AppCompatActivity() {
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var edit = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
+
+        edit = false
+
         binding = ActivityCarBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.toolbarAdd.title = title
@@ -49,11 +53,7 @@ class CarSellActivity : AppCompatActivity() {
         }
 
         binding.carLocation.setOnClickListener {
-            i ("Set Location Pressed")
-        }
-
-        binding.deleteButton.setOnClickListener {
-            i ("Delete Button Pressed")
+            i("Set Location Pressed")
         }
 
 
@@ -127,8 +127,23 @@ class CarSellActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_listing, menu)
+        menuInflater.inflate(R.menu.menu_car, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_delete -> {
+                setResult(99)
+                app.cars.delete(car)
+                finish()
+            }
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
