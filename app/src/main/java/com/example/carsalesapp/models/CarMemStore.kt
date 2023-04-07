@@ -40,7 +40,9 @@ class CarMemStore : CarStore {
         cars.forEach{ i("$it") }
     }
 
-//    override fun delete(car: CarModel) {
-//        cars.remove(car)
-//    }
+
+    override fun delete(car: CarModel) {
+        cars.remove(car)
+    }
+
 }
