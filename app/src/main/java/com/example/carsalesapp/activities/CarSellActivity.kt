@@ -100,7 +100,7 @@ class CarSellActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
 
         binding.carLocation.setOnClickListener {
@@ -197,19 +197,23 @@ class CarSellActivity : AppCompatActivity() {
         imageIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { result ->
-                when (result.resultCode) {
+                when(result.resultCode){
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            car.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            car.image = image
+
                             Picasso.get()
                                 .load(car.image)
                                 .into(binding.carImage)
                             binding.chooseImage.setText(R.string.change_car_image)
                         } // end of if
                     }
-                    RESULT_CANCELED -> {}
-                    else -> {}
+                    RESULT_CANCELED -> { } else -> { }
                 }
             }
     }
