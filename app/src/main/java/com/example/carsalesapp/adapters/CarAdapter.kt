@@ -1,20 +1,11 @@
 package com.example.carsalesapp.adapters
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.carsalesapp.R
-import com.example.carsalesapp.activities.CarListActivity
 import com.example.carsalesapp.databinding.CardCarBinding
 import com.example.carsalesapp.models.CarModel
 import com.squareup.picasso.Picasso
-import timber.log.Timber.i
 
 interface CarListener {
     fun onCarClick(car: CarModel, position: Int)

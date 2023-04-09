@@ -2,8 +2,6 @@ package com.example.carsalesapp.main
 
 import android.app.Application
 import com.example.carsalesapp.models.CarJSONStore
-import com.example.carsalesapp.models.CarMemStore
-import com.example.carsalesapp.models.CarModel
 import com.example.carsalesapp.models.CarStore
 
 import timber.log.Timber
@@ -18,6 +16,6 @@ class MainApp : Application() {
         Timber.plant(Timber.DebugTree())
         // cars = CarMemStore()
         cars = CarJSONStore(applicationContext)
-        i("Carsales started")
+        i("Car Sales started")
     }
 }

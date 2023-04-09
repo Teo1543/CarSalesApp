@@ -1,17 +1,12 @@
 package com.example.carsalesapp.activities
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
-import com.example.carsalesapp.R
 import com.example.carsalesapp.databinding.ActivityCarMapsBinding
 import com.example.carsalesapp.databinding.ContentCarMapsBinding
 import com.example.carsalesapp.main.MainApp
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -20,7 +15,7 @@ class CarMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     private lateinit var binding: ActivityCarMapsBinding
     private lateinit var contentBinding: ContentCarMapsBinding
-    lateinit var map: GoogleMap
+    private lateinit var map: GoogleMap
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {

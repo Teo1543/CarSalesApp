@@ -21,7 +21,7 @@ fun generateRandomId(): Long {
 
 class CarJSONStore(private val context: Context) : CarStore {
 
-    var cars = mutableListOf<CarModel>()
+    private var cars = mutableListOf<CarModel>()
 
     init {
         if (exists(context, JSON_FILE)) {
@@ -43,7 +43,7 @@ class CarJSONStore(private val context: Context) : CarStore {
 
     override fun update(car: CarModel) {
         val carsList = findAll() as ArrayList<CarModel>
-        var foundCar: CarModel? = carsList.find { p -> p.id == car.id }
+        val foundCar: CarModel? = carsList.find { p -> p.id == car.id }
         if (foundCar != null) {
             foundCar.name = car.name
             foundCar.year = car.year
@@ -76,23 +76,6 @@ class CarJSONStore(private val context: Context) : CarStore {
     }
 }
 
-class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
-    override fun deserialize(
-        json: JsonElement?,
-        typeOfT: Type?,
-        context: JsonDeserializationContext?
-    ): Uri {
-        return Uri.parse(json?.asString)
-    }
-
-    override fun serialize(
-        src: Uri?,
-        typeOfSrc: Type?,
-        context: JsonSerializationContext?
-    ): JsonElement {
-        return JsonPrimitive(src.toString())
-    }
-
     class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
         override fun deserialize(
             json: JsonElement?,
@@ -110,4 +93,3 @@ class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
             return JsonPrimitive(src.toString())
         }
     }
-}

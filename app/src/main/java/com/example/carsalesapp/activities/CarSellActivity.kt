@@ -29,7 +29,7 @@ class CarSellActivity : AppCompatActivity() {
     private lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
-    var edit = false
+    private var edit = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

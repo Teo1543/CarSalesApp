@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,8 +14,6 @@ import com.example.carsalesapp.adapters.CarListener
 import com.example.carsalesapp.databinding.ActivityCarListBinding
 import com.example.carsalesapp.main.MainApp
 import com.example.carsalesapp.models.CarModel
-import com.example.carsalesapp.models.CarStore
-import kotlin.random.Random
 
 class CarListActivity : AppCompatActivity(), CarListener {
 
@@ -74,10 +71,10 @@ class CarListActivity : AppCompatActivity(), CarListener {
             }
         }
 
-    override fun onCarClick(car: CarModel, pos : Int) {
+    override fun onCarClick(car: CarModel, position : Int) {
         val launcherIntent = Intent(this, CarSellActivity::class.java)
         launcherIntent.putExtra("car_edit", car)
-        position = pos
+        this.position = position
         getClickResult.launch(launcherIntent)
     }
 
