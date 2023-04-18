@@ -45,4 +45,9 @@ class CarMemStore : CarStore {
         cars.remove(car)
     }
 
+    override fun findById(id:Long) : CarModel? {
+        val foundCar: CarModel? = cars.find { it.id == id }
+        return foundCar
+    }
+
 }

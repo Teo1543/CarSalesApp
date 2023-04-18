@@ -61,6 +61,11 @@ class CarJSONStore(private val context: Context) : CarStore {
         serialize()
     }
 
+    override fun findById(id:Long) : CarModel? {
+        val foundCar: CarModel? = cars.find { it.id == id }
+        return foundCar
+    }
+
     private fun serialize() {
         val jsonString = gsonBuilder.toJson(cars, listType)
         write(context, JSON_FILE, jsonString)

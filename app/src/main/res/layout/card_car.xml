@@ -29,13 +29,15 @@
             android:id="@+id/carModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="132dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="29dp"
             android:textAlignment="center"
             android:textColor="@color/black"
+
             android:textSize="20sp"
+
             app:flow_horizontalAlign="center"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Vehicle Name" />
 
@@ -43,11 +45,12 @@
             android:id="@+id/carYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="172dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="80dp"
             android:textAlignment="center"
+
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/carModel"
             tools:text="Year" />
 
@@ -55,12 +58,15 @@
             android:id="@+id/carEngineSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="188dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="85dp"
+
             android:textAlignment="center"
+
             android:textColor="@color/black"
+
             app:flow_horizontalAlign="center"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/carYear"
             tools:text="Engine Size" />
 

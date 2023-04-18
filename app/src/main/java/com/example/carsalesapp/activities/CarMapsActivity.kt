@@ -10,6 +10,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
 
 class CarMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
@@ -71,8 +72,12 @@ class CarMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
         contentBinding.mapView.onSaveInstanceState(outState)
     }
     override fun onMarkerClick(marker: Marker): Boolean {
-        contentBinding.currentTitle.text = marker.title
-
+        //val car = marker.tag as CarModel
+        val tag = marker.tag as Long
+        val car = app.cars.findById(tag)
+        contentBinding.currentTitle.text = car!!.name
+        contentBinding.currentDescription.text = car.year.toString()
+        Picasso.get().load(car.image).into(contentBinding.imageView2)
         return false
     }
 
